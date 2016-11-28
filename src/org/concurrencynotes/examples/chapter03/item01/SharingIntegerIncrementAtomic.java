@@ -6,7 +6,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
 
-public class SharingDataIncrementAtomic {
+public class SharingIntegerIncrementAtomic {
 	static AtomicInteger count = new AtomicInteger(0);
 	static Object mutex = new Object();
 
@@ -19,7 +19,7 @@ public class SharingDataIncrementAtomic {
 	public static void main(String[] args) throws InterruptedException {
 		ExecutorService executor = Executors.newFixedThreadPool(8);
 		IntStream.range(0, 10000)
-				 .forEach(i -> executor.submit(SharingDataIncrementAtomic::incrementSync));
+				 .forEach(i -> executor.submit(SharingIntegerIncrementAtomic::incrementSync));
 
 		executor.shutdown();
 		executor.awaitTermination(1, TimeUnit.SECONDS);

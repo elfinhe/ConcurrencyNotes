@@ -1,4 +1,4 @@
-package org.concurrencynotes.examples.chapter02.item5;
+package org.concurrencynotes.examples.chapter02.item05;
 
 import java.util.Arrays;
 import java.util.List;

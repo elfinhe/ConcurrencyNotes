@@ -1,6 +1,5 @@
 package org.concurrencynotes.examples.chapter02.item04;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -14,10 +13,11 @@ public class CreateNewThreadExecutorFuture {
 		ExecutorService executor = Executors.newFixedThreadPool(8);
 		ArrayList<Future<Integer>> futures = new ArrayList<Future<Integer>>();
 		for (int i = 0; i < 20; i++) {
+			final int threadID = i;
 			Callable<Integer> task = () -> {
 				try {
 					TimeUnit.SECONDS.sleep(1);
-					return 123;
+					return threadID;
 				}
 				catch (InterruptedException e) {
 					throw new IllegalStateException("task interrupted", e);

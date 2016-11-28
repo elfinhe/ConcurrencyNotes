@@ -1,4 +1,4 @@
-package org.concurrencynotes.examples.chapter02.item6;
+package org.concurrencynotes.examples.chapter02.item06;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;

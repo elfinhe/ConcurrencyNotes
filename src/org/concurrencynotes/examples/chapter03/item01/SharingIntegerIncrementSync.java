@@ -5,7 +5,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
 
-public class SharingDataIncrementSync {
+public class SharingIntegerIncrementSync {
 	static int count = 0;
 	static Object mutex = new Object();
 
@@ -18,7 +18,7 @@ public class SharingDataIncrementSync {
 	public static void main(String[] args) throws InterruptedException {
 		ExecutorService executor = Executors.newFixedThreadPool(8);
 		IntStream.range(0, 10000)
-				 .forEach(i -> executor.submit(SharingDataIncrementSync::incrementSync));
+				 .forEach(i -> executor.submit(SharingIntegerIncrementSync::incrementSync));
 
 		executor.shutdown();
 		executor.awaitTermination(1, TimeUnit.SECONDS);

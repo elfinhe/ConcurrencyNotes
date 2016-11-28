@@ -6,13 +6,15 @@ import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.stream.IntStream;
 
-public class SharingContainerSync {
+public class SharingContainerReadWriteLock {
 	static int count = 0;
 	static Map<Integer, Integer> container = new HashMap<>();
 	static Random random = new Random();
-	static Object mutex = new Object();
+	static ReadWriteLock lock = new ReentrantReadWriteLock();
 
 	static {
 		IntStream.range(0, 1000000).forEach(i -> write());
@@ -24,24 +26,33 @@ public class SharingContainerSync {
 	}
 
 	static Integer read() {
-		synchronized (mutex) {
+		lock.readLock().lock();
+		try {
 			count++;
+			System.err.println("Reading: " + count);
 			return container.getOrDefault(getRandom(), 0);
+		} finally {
+			lock.readLock().unlock();
 		}
 	}
 
 	static void write() {
-		synchronized (mutex) {
+		lock.writeLock().lock();
+		try {
 			count++;
+			System.err.println("Writing: " + count);
 			container.put(getRandom(), getRandom());
+		} finally {
+			lock.writeLock().unlock();
 		}
+
 	}
 
 	public static void main(String[] args) throws InterruptedException {
 		System.err.println("Start main");
 		ExecutorService executor = Executors.newFixedThreadPool(8);
 		IntStream.range(0, 10000)
-				 .forEach(i -> executor.submit((i%2 == 1) ? SharingContainerSync::read : SharingContainerSync::write ));
+				 .forEach(i -> executor.submit((i%2 == 1) ? SharingContainerReadWriteLock::read : SharingContainerReadWriteLock::write ));
 
 		executor.shutdown();
 		executor.awaitTermination(1, TimeUnit.SECONDS);
