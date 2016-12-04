@@ -7,7 +7,7 @@ import java.util.stream.IntStream;
 
 public class SharingIntegerIncrementSync {
 	static int count = 0;
-	static Object mutex = new Object();
+	static final Object mutex = new Object();
 
 	static void incrementSync() {
 		synchronized (mutex) {

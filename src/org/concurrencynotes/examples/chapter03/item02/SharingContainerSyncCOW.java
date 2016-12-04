@@ -6,13 +6,13 @@ import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
 
 public class SharingContainerSyncCOW {
-	static int count = 0;
 	static volatile Map<Integer, Integer> containerToBeRead = new HashMap<>();
 	static Map<Integer, Integer> containerToBeWritten = new HashMap<>();
-	static int threshold = 0;
+	static AtomicInteger threshold = new AtomicInteger(0);
 	static final int LIMIT = 100;
 	static Random random = new Random();
 	static Object mutex = new Object();
@@ -28,20 +28,20 @@ public class SharingContainerSyncCOW {
 	}
 
 	static Integer read() {
-		count++;
 		return containerToBeRead.getOrDefault(getRandom(), 0);
 	}
 
 	static void write() {
-		count++;
-		threshold++;
+		threshold.incrementAndGet();
 		containerToBeWritten.put(getRandom(), getRandom());
 
-		if (threshold > LIMIT) {
+		if (threshold.get() >= LIMIT) {
 			synchronized (mutex) {
-				if (threshold > LIMIT) {
+				if (threshold.get() >= LIMIT) {
+					System.out.println("threshold " + threshold.get());
 					containerToBeRead = containerToBeWritten;
 					containerToBeWritten = new HashMap<>(containerToBeRead);
+					threshold.set(0);
 				}
 			}
 		}
@@ -55,7 +55,6 @@ public class SharingContainerSyncCOW {
 
 		executor.shutdown();
 		executor.awaitTermination(1, TimeUnit.SECONDS);
-		System.out.println(count);
 	}
 }
 

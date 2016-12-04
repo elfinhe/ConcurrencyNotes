@@ -5,6 +5,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
 
+// NOT THREAD SAFE
 public class SharingIntegerIncrement {
 	static int count = 0;
 	static void increment() {
