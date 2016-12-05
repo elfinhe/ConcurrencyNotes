@@ -17,7 +17,6 @@ public class SharingContainerSyncCOW {
 	static Random random = new Random();
 	static Object mutex = new Object();
 
-
 	static {
 		IntStream.range(0, 1000000).forEach(i -> write());
 		System.err.println("End Initialization");
@@ -38,7 +37,6 @@ public class SharingContainerSyncCOW {
 		if (threshold.get() >= LIMIT) {
 			synchronized (mutex) {
 				if (threshold.get() >= LIMIT) {
-					System.out.println("threshold " + threshold.get());
 					containerToBeRead = containerToBeWritten;
 					containerToBeWritten = new HashMap<>(containerToBeRead);
 					threshold.set(0);

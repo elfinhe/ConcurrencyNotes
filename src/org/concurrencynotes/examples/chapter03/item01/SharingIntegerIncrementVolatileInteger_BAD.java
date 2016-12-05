@@ -6,7 +6,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
 
 // NOT THREAD SAFE
-public class SharingIntegerIncrementVolatileInteger {
+public class SharingIntegerIncrementVolatileInteger_BAD {
 	static volatile Integer count = 0;
 
 	static void incrementSync() {
@@ -16,7 +16,7 @@ public class SharingIntegerIncrementVolatileInteger {
 	public static void main(String[] args) throws InterruptedException {
 		ExecutorService executor = Executors.newFixedThreadPool(8);
 		IntStream.range(0, 10000)
-				 .forEach(i -> executor.submit(SharingIntegerIncrementVolatileInteger::incrementSync));
+				 .forEach(i -> executor.submit(SharingIntegerIncrementVolatileInteger_BAD::incrementSync));
 
 		executor.shutdown();
 		executor.awaitTermination(1, TimeUnit.SECONDS);

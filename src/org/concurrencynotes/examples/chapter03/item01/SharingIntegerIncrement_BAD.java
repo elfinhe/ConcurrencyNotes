@@ -6,7 +6,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
 
 // NOT THREAD SAFE
-public class SharingIntegerIncrement {
+public class SharingIntegerIncrement_BAD {
 	static int count = 0;
 	static void increment() {
 		count = count + 1;
@@ -14,7 +14,7 @@ public class SharingIntegerIncrement {
 	public static void main(String[] args) throws InterruptedException {
 		ExecutorService executor = Executors.newFixedThreadPool(8);
 		IntStream.range(0, 10000)
-				 .forEach(i -> executor.submit(SharingIntegerIncrement::increment));
+				 .forEach(i -> executor.submit(SharingIntegerIncrement_BAD::increment));
 
 		executor.shutdown();
 		executor.awaitTermination(1, TimeUnit.SECONDS);
