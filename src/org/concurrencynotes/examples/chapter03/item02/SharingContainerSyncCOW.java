@@ -12,9 +12,9 @@ import java.util.stream.IntStream;
 public class SharingContainerSyncCOW {
 	static volatile Map<Integer, Integer> containerToBeRead = new HashMap<>();
 	static Map<Integer, Integer> containerToBeWritten = new HashMap<>();
-	static AtomicInteger threshold = new AtomicInteger(0);
+	static final AtomicInteger threshold = new AtomicInteger(0);
 	static final int LIMIT = 100;
-	static Random random = new Random();
+	static final Random random = new Random();
 	static Object mutex = new Object();
 
 	static {
