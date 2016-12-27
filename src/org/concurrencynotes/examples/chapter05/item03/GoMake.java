@@ -13,11 +13,11 @@ package org.concurrencynotes.examples.chapter05.item03;
 // SynchronousQueue
 
 public class GoMake<T> {
-    public GoChanBuf<T> make(final int size) {
+    public GoChan<T> make(final int size) {
         return new GoChanBuf<T>(size);
     }
 
-    public GoChanUnbuf make() {
+    public GoChan<T> make() {
         return new GoChanUnbuf<T>();
     }
 }

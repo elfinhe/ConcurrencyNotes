@@ -1,14 +1,8 @@
 package org.concurrencynotes.examples.chapter05.item03;
 
 import java.util.ArrayList;
-import java.util.Random;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.IntStream;
 
 
 //         	  Exception   	Special Value	Blocks 	Times Out
@@ -30,7 +24,7 @@ public class GoSelect<T> {
         this.chanList = chanList;
     }
 
-    // Only for ONE thread
+    // Only unsed in ONE thread
     public GoChan<T> select() throws InterruptedException {
         while(true) {
             for (GoChan<T> chan : chanList) {

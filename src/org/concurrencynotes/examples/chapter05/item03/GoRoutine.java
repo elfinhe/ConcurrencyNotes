@@ -3,7 +3,6 @@ package org.concurrencynotes.examples.chapter05.item03;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
-import java.util.function.Function;
 
 
 //         	  Exception   	Special Value	Blocks 	Times Out

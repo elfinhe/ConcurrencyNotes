@@ -2,7 +2,6 @@ package org.concurrencynotes.examples.chapter05.item03;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.SynchronousQueue;
-import java.util.stream.Stream;
 
 
 //         	  Exception   	Special Value	Blocks 	Times Out
